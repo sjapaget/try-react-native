@@ -1,20 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { View } from 'react-native';
 
-export default function App() {
+import NewCat from './components/newCat'
+import Cat from './components/cat'
+
+const App = () => {
+
+  const [catNames, setCatNames] = useState(['Chuck'])
+
+  const displayCats = () => catNames.map(cat => <Cat catName={cat} />)
+
+  const addCat = e => setCatNames([e.target.value, ...catNames])
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={appStyles.mainView}>
+      <NewCat makeCat={addCat} />
+      {displayCats()}
     </View>
   );
+};
+
+const appStyles = {
+  mainView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
